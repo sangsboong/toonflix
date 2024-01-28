@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/models/webtoon_model.dart';
 import 'package:toonflix/services/api_service.dart';
+import 'package:toonflix/widgets/webtoon_widget.dart';
 
 class HomeScreenAppBar extends StatelessWidget {
   HomeScreenAppBar({super.key});
@@ -52,22 +53,14 @@ class HomeScreenAppBar extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: snapshot.data!.length,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       itemBuilder: (context, index) {
         print(index);
         var webtoon = snapshot.data![index];
-        return Column(
-          children: [
-            Image.network(
-              webtoon.thumb,
-              // 403 error 대응. header 추가. or httpOverrides 로 추가
-              /*
-              headers: const {
-                "User-Agent":
-                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-              },*/
-            ),
-            Text(webtoon.title),
-          ],
+        return Webtoon(
+          id: webtoon.id,
+          thumb: webtoon.thumb,
+          title: webtoon.title,
         );
       },
       separatorBuilder: (context, index) => const SizedBox(
